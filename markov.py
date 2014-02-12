@@ -8,10 +8,23 @@ def make_chains(corpus):
     markov chains."""
     input_textr = corpus.read()
     split_words = input_textr.split()
-    
+
     split_word_dict = {}
-    for word in range(len(split_words)-2):
-        split_word_dict[(split_words[word] , split_words[word + 1])] = [split_words[word + 2]]
+    for word in split_words:
+        if not split_word_dict.get(word):
+            for index in range(len(split_words)-2):
+        #if not split_word_dict.get(index):
+            #If it's not in the dictionary, add two items from the list as keys and the next item as the value
+        
+            #split_word_dict[index] = split_word_dict[(split_words[index] , split_words[index + 1])] = [split_words[index + 2]]
+        #else:
+            #If the item is already in the dictionary as a key, we need to add the next two items to the key's values
+            #split_word_dict[index].append(split_words[index + 2])
+            #split_word_dict = {}
+    #for index in range(len(split_words)-2):
+                split_word_dict[(split_words[index] , split_words[index + 1])] = [split_words[index + 2]]
+        else:
+            split_word_dict[word].append(split_words[index + 2])
     print split_word_dict
 
 def make_text(chains):
