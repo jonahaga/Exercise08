@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import sys
-<<<<<<< HEAD
 from random import randint
 
 
@@ -57,8 +56,10 @@ def make_text(chains):
                 # words.append(key[0])
                 # words.append(key[1])
 
+    end_punct = ".!?"
+
     # Getting the next word
-    while chains.get(key) and len(words) < 25:
+    while chains.get(key) and (len(words) < 25 or end_punct.find(key[1][-1]) == -1):
         # value = chains[key]
         # rand_number = randint(0, len(value) - 1)
         # rand_word = value[rand_number]
@@ -71,57 +72,24 @@ def make_text(chains):
         # Updating key to be the last two items in list
         key = tuple((words[-2:]))
 
-    end_punct = ".!?"
-    # Keep going until we find a second tuple that ends in end_punct
-    while chains.get(key) and end_punct.find(key[1][-1]) == -1:
-        value = chains[key]
-        rand_number = randint(0, len(value) - 1)
-        rand_word = value[rand_number]
+    # end_punct = ".!?"
+    # # Keep going until we find a second tuple that ends in end_punct
+    # while chains.get(key) and end_punct.find(key[1][-1]) == -1:
+    #     value = chains[key]
+    #     rand_number = randint(0, len(value) - 1)
+    #     rand_word = value[rand_number]
 
-        words.append(rand_word)
+    #     words.append(rand_word)
 
-        # Updating key to be the last two items in list
-        key = tuple((words[-2:]))
+    #     # Updating key to be the last two items in list
+    #     key = tuple((words[-2:]))
 
     return ' '.join(words)
 
-=======
-
-
-def make_chains(corpus):
-    """Takes an input text as a string and returns a dictionary of
-    markov chains."""
-    input_textr = corpus.read()
-    split_words = input_textr.split()
-
-    split_word_dict = {}
-    for word in split_words:
-        if not split_word_dict.get(word):
-            for index in range(len(split_words)-2):
-        #if not split_word_dict.get(index):
-            #If it's not in the dictionary, add two items from the list as keys and the next item as the value
-        
-            #split_word_dict[index] = split_word_dict[(split_words[index] , split_words[index + 1])] = [split_words[index + 2]]
-        #else:
-            #If the item is already in the dictionary as a key, we need to add the next two items to the key's values
-            #split_word_dict[index].append(split_words[index + 2])
-            #split_word_dict = {}
-    #for index in range(len(split_words)-2):
-                split_word_dict[(split_words[index] , split_words[index + 1])] = [split_words[index + 2]]
-        else:
-            split_word_dict[word].append(split_words[index + 2])
-    print split_word_dict
-
-def make_text(chains):
-    """Takes a dictionary of markov chains and returns random text
-    based off an original text."""
-    return "Here's some random text."
->>>>>>> 9123f2b0f77f82721520d8348c370bd76f592779
 
 def main():
     args = sys.argv
 
-<<<<<<< HEAD
     script, filename1, filename2 = args
 
     f1 = open(filename1)
@@ -130,13 +98,6 @@ def main():
     input_text += f2.read()
     f1.close()
     f2.close()
-=======
-    # Change this to read input_text from a file
-    input_text = open('input_text.txt', 'r')
-
-    # Data Structure
-    # {(bigram_1, bigram_2): [unigram]}
->>>>>>> 9123f2b0f77f82721520d8348c370bd76f592779
 
     chain_dict = make_chains(input_text)
     random_text = make_text(chain_dict)
