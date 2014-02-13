@@ -40,6 +40,7 @@ def make_text(chains):
     keys = chains.keys()
 
     words = []
+    # Finding a capitalized word to start first tuple
     while len(words) == 0:   
         # Create a random number start to index into the list of keys
         start = randint(0, len(keys) - 1)
@@ -47,21 +48,18 @@ def make_text(chains):
         # Pull random key from list of keys
         key = keys[start]
 
-        # Make sure first item in first tuple is a capitalized letter
-        if key[0][0].capitalize() == key[0][0]: 
+        # Make sure first item in first tuple is a capilized letter
+        if ord(key[0][0]) >= ord('A') and ord(key[0][0]) <= ord('Z'):
             words = [key[0], key[1]]
             # Same as:         
                 # words = []
                 # words.append(key[0])
                 # words.append(key[1])
-    print words
-    print key
 
     end_punct = ".!?"
-    # Getting the next word ## Also rewrite < 25 to be 140 characters or less
-    while chains.get(key) and end_punct.find(key[1][-1]) == -1:
 
-        #print chains.get(key) and (((len(' '.join(words) + ' '.join(key))) <= 30)) or end_punct.find(key[1][-1]) == -1
+    # Getting the next word
+    while chains.get(key) and (len(' '.join(words)) < 25 or end_punct.find(key[1][-1]) == -1):
         # value = chains[key]
         # rand_number = randint(0, len(value) - 1)
         # rand_word = value[rand_number]
@@ -73,11 +71,6 @@ def make_text(chains):
 
         # Updating key to be the last two items in list
         key = tuple((words[-2:]))
-
-        if len(' '.join(words)) >= 50:
-            break
-
-
 
     # end_punct = ".!?"
     # # Keep going until we find a second tuple that ends in end_punct
@@ -91,8 +84,17 @@ def make_text(chains):
     #     # Updating key to be the last two items in list
     #     key = tuple((words[-2:]))
 
-    return ' '.join(words)
+    sentence = ' '.join(words)
+    return sentence
 
+def valid_tweet(sentence):
+    if len(sentence) < 140:
+        return True
+    else:
+        return False
+
+    # while len(make_text(sentence)) <= 140:
+    #      return sentence
 
 def main():
     args = sys.argv
@@ -108,7 +110,17 @@ def main():
 
     chain_dict = make_chains(input_text)
     random_text = make_text(chain_dict)
-    print random_text
+    tweet = valid_tweet(random_text)
+
+    while True:
+        if tweet == False:
+            random_text = make_text(chain_dict)
+            tweet = valid_tweet(random_text)
+        else:
+            print random_text
+            break
+
+    # print tweet 
 
 if __name__ == "__main__":
     main()
