@@ -51,18 +51,11 @@ def make_text(chains):
         # Make sure first item in first tuple is a capilized letter
         if ord(key[0][0]) >= ord('A') and ord(key[0][0]) <= ord('Z'):
             words = [key[0], key[1]]
-            # Same as:         
-                # words = []
-                # words.append(key[0])
-                # words.append(key[1])
 
     end_punct = ".!?"
 
     # Getting the next word
     while chains.get(key) and (len(' '.join(words)) < 25 or end_punct.find(key[1][-1]) == -1):
-        # value = chains[key]
-        # rand_number = randint(0, len(value) - 1)
-        # rand_word = value[rand_number]
         rand_number = randint(0, len(chains[key]) - 1)
         rand_word = chains[key][rand_number]        
 
@@ -71,18 +64,6 @@ def make_text(chains):
 
         # Updating key to be the last two items in list
         key = tuple((words[-2:]))
-
-    # end_punct = ".!?"
-    # # Keep going until we find a second tuple that ends in end_punct
-    # while chains.get(key) and end_punct.find(key[1][-1]) == -1:
-    #     value = chains[key]
-    #     rand_number = randint(0, len(value) - 1)
-    #     rand_word = value[rand_number]
-
-    #     words.append(rand_word)
-
-    #     # Updating key to be the last two items in list
-    #     key = tuple((words[-2:]))
 
     sentence = ' '.join(words)
     return sentence
@@ -93,8 +74,6 @@ def valid_tweet(sentence):
     else:
         return False
 
-    # while len(make_text(sentence)) <= 140:
-    #      return sentence
 
 def main():
     args = sys.argv
@@ -120,7 +99,6 @@ def main():
             print random_text
             break
 
-    # print tweet 
 
 if __name__ == "__main__":
     main()
