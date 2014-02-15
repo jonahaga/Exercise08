@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import sys
+import os
+import twitter
 from random import randint
 
 
@@ -90,13 +92,14 @@ def main():
     chain_dict = make_chains(input_text)
     random_text = make_text(chain_dict)
     tweet = valid_tweet(random_text)
+    api = twitter.Api(consumer_key=os.environ.get("CONSUMER_KEY"), consumer_secret=os.environ.get("CONSUMER_SECRET"), access_token_key=os.environ.get("ACCESS_TOKEN"), access_token_secret=os.environ.get("ACCESS_TOKEN_SECRET"))
 
     while True:
         if tweet == False:
             random_text = make_text(chain_dict)
             tweet = valid_tweet(random_text)
         else:
-            print random_text
+            api.PostUpdate(random_text)
             break
 
 
